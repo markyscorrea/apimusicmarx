@@ -12,6 +12,9 @@ module.exports = {
     },
 
     async saveMusic(req, res){
+        if(!req.body){
+            res.send(400).json({ error: "Não existe cadastro para essa ID" })
+        }
         const { name, links } = req.body 
         const music = new Music({
             name: name,
