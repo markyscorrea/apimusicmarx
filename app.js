@@ -15,4 +15,4 @@ connectToDatabase()
 
 app.use('/', router)
 
-app.listen(8080, console.log('Servidor em produção.'))
+app.listen(8080, console.log('Servidor em produção.🟢'))
