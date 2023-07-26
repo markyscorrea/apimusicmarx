@@ -1,16 +1,24 @@
 const Music = require('../models/Music')
 
 module.exports = {
-    async ValidadeMusic(req, res, next){
-        if(!req.params.id){
-            res.send(400).json({ error: "Não existe cadastro para essa ID" })
+    async ValidadeMusic(req, res, next) {
+
+        const id = req.params.id;
+
+        if (!id) {
+            res.sendStatus(400).json({ error: "Não existe cadastro para essa ID" })
         }
-        try{
-            const music = await Music.findById(req.params.id)
+
+        if (id.length != 24) {
+            res.sendStatus(400).json({ error: "A ID informada é incorreta" })
+        }
+
+        try {
+            const music = await Music.findById(req.params.id);
+            
             res.music = music
-        }catch(err){
-            console.log(err)
-            res.send(400).json({ error: "Não existe cadastro para essa ID" })
+        } catch (err) {
+            res.sendStatus(400).json({ error: "Não existe cadastro para essa ID" })
         }
 
         next();
