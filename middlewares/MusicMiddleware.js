@@ -19,7 +19,9 @@ module.exports = {
             if (music) {
                 res.music = music
                 return next();
-            } 
+            } else {
+                throw new BadRequestException();
+            }
 
             return res.sendStatus(400).json({ error: "Não existe cadastro para essa ID" });
 
