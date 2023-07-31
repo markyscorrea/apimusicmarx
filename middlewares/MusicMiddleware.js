@@ -6,21 +6,26 @@ module.exports = {
         const id = req.params.id;
 
         if (!id) {
-            res.sendStatus(400).json({ error: "Não existe cadastro para essa ID" })
+            return res.sendStatus(400).json({ error: "Não existe cadastro para essa ID" })
         }
 
         if (id.length != 24) {
-            res.sendStatus(400).json({ error: "A ID informada é incorreta" })
+            return res.sendStatus(400).json({ error: "A ID informada é incorreta" })
         }
 
         try {
             const music = await Music.findById(req.params.id);
-            
-            res.music = music
+
+            if (music) {
+                res.music = music
+                return next();
+            } 
+
+            return res.sendStatus(400).json({ error: "Não existe cadastro para essa ID" });
+
         } catch (err) {
-            res.sendStatus(400).json({ error: "Não existe cadastro para essa ID" })
+            return res.sendStatus(400).json({ error: "Não existe cadastro para essa ID" });
         }
 
-        next();
     }
 }
